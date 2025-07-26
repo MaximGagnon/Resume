@@ -4,7 +4,241 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maxim Gagnon - QA Analyst & AI Integration Specialist</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 8px;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 3px solid #007bff;
+            margin-bottom: 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin: -40px -40px 35px -40px;
+            padding: 40px;
+            border-radius: 8px 8px 0 0;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 3em;
+            font-weight: bold;
+        }
+        .header .job-title {
+            margin: 10px 0 20px;
+            font-size: 1.4em;
+            opacity: 0.9;
+        }
+        .header .contact {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 1em;
+            flex-wrap: wrap;
+        }
+        .value-prop {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff6b6b;
+        }
+        .value-prop h2 {
+            color: #d63031;
+            margin-top: 0;
+            font-size: 1.4em;
+        }
+        .main-content h2 {
+            color: #2d3436;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+            font-size: 1.7em;
+            margin-top: 40px;
+            position: relative;
+        }
+        .main-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #ff6b6b;
+        }
+        .experience .job, .education .school {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .experience h3, .education h3 {
+            margin-bottom: 5px;
+            color: #2d3436;
+            font-size: 1.3em;
+        }
+        .experience p, .education p {
+            font-style: italic;
+            color: #636e72;
+            margin: 0 0 15px;
+            font-weight: 500;
+        }
+        .experience ul li {
+            margin-bottom: 8px;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .skill-category {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        .skill-category h4 {
+            color: #2d3436;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+        .skill-category ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .skill-category ul li {
+            background: rgba(255,255,255,0.8);
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            border: 1px solid #dee2e6;
+        }
+        .keywords-section {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border: 2px solid #007bff;
+        }
+        .keywords-section h3 {
+            color: #0056b3;
+            margin-top: 0;
+        }
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .keyword {
+            background: #007bff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .header { margin: -20px -20px 35px -20px; padding: 30px 20px; }
+            .header .contact { flex-direction: column; gap: 10px; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        #download-pdf {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #download-pdf:hover {
+            background-color: #0056b3;
+        }
+
+        /* PDF Export Styles */
+        .pdf-export body {
+            background-color: #fff;
+            color: #000;
+            font-size: 10pt;
+        }
+        .pdf-export .container {
+            box-shadow: none;
+            padding: 0;
+            margin: 0;
+            max-width: 100%;
+        }
+        .pdf-export .header, .pdf-export .value-prop, .pdf-export .skill-category, .pdf-export .keywords-section, .pdf-export .skill-category ul li {
+            background: none;
+            border: none;
+            color: #000;
+        }
+        .pdf-export .header {
+            border-bottom: 2px solid #000;
+            padding: 20px 0;
+            margin: 0 0 20px 0;
+        }
+        .pdf-export .header h1, .pdf-export .header .job-title, .pdf-export .header .contact span, .pdf-export .value-prop h2, .pdf-export .main-content h2, .pdf-export .keywords-section h3 {
+            color: #000 !important;
+            opacity: 1;
+        }
+        .pdf-export .main-content h2::after {
+            display: none;
+        }
+        .pdf-export .experience .job, .pdf-export .education .school, .pdf-export .skill-category, .pdf-export .keywords-section {
+            padding: 0;
+            border: none;
+            background: none;
+            page-break-inside: avoid;
+            margin-bottom: 20px;
+        }
+        .pdf-export .keyword {
+            background: #eee;
+            color: #000;
+            border: 1px solid #ccc;
+        }
+        .pdf-export footer {
+            display: none;
+        }
+
+        @media print {
+            footer {
+                display: none;
+            }
+            .education {
+                page-break-before: always; /* For native browser printing */
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -14,19 +248,19 @@
             <div class="contact">
                 <span>📧 maxim.gagnon.mg@gmail.com</span>
                 <span>📱 +387 (0)61-319-058</span>
-
+                <span>💼 Remote-Ready • Cost-Effective</span>
             </div>
         </header>
 
         <div class="value-prop">
             <h2>🚀 Why Choose Max?</h2>
-            <p><strong>Proven ROI:</strong> 5+ years delivering quality results at 40-60% below North American rates • <strong>AI-Native:</strong> Already leveraging LLMs and automation tools to increase productivity 10x • <strong>Zero Learning Curve:</strong> Hit the ground running from day one with enterprise-level testing experience • <strong>Remote-Ready & Cost-Effective</strong></p>
+            <p><strong>Proven ROI:</strong> 5+ years delivering quality results at 40-60% below North American rates • <strong>AI-Native:</strong> Already leveraging LLMs and automation tools to increase productivity 10x • <strong>Zero Learning Curve:</strong> Hit the ground running from day one with enterprise-level testing experience</p>
         </div>
 
         <main class="main-content">
             <section class="summary">
                 <h2>Professional Summary</h2>
-                <p>Results-driven QA Analyst with 5+ years of hands-on experience in manual and automated testing for web and mobile applications. <strong>Early adopter of AI/LLM integration</strong> for enhanced testing workflows and documentation. Proven track record of reducing bug escape rates by 35% while maintaining comprehensive test coverage. <strong>Cost-effective remote specialist</strong> with strong work ethic and shameless commitment to leveraging cutting-edge tools for maximum efficiency.</p>
+                <p>Results-driven QA Analyst with 5+ years of hands-on experience in manual and automated testing for web and mobile applications. <strong>Early adopter of AI/LLM integration</strong> for enhanced testing workflows and documentation. <strong>Cost-effective remote specialist</strong> with strong work ethic and shameless commitment to leveraging cutting-edge tools for maximum efficiency.</p>
             </section>
 
             <section class="experience">
@@ -35,14 +269,17 @@
                 <div class="job">
                     <h3>Senior QA Analyst - Claire Automotive Support</h3>
                     <p><em>July 2019 - Present (5+ years)</em></p>
+                    <p><strong>📈 Impact Statement:</strong> <em>Role expansion required 4-person team post-departure, with documentation and multilingual support capabilities remaining unfilled</em></p>
                     <ul>
-                        <li><strong>Manual & Automated Testing:</strong> Execute comprehensive testing strategies for web applications and Android mobile apps, ensuring 99.5% uptime and user satisfaction</li>
-                        <li><strong>Bug Lifecycle Management:</strong> Investigate, document, and report critical issues using structured methodologies, reducing resolution time by 40%</li>
-                        <li><strong>Release Management:</strong> Create and publish detailed release notes, coordinating with Product Owners to ensure seamless deployments</li>
-                        <li><strong>Documentation & Knowledge Management:</strong> Maintain and update comprehensive knowledge base using Zoho Desk, including multilingual content creation</li>
-                        <li><strong>Cross-functional Collaboration:</strong> Serve as primary technical liaison between Development, Product, and Customer Success teams</li>
-                        <li><strong>Customer Issue Resolution:</strong> Troubleshoot complex technical issues, providing tier-2 support and training to end users</li>
-                        <li><strong>AI Integration:</strong> Pioneered use of LLMs for test case generation and documentation improvement, increasing productivity by 200%</li>
+                        <li><strong>Manual & API Testing:</strong> Execute comprehensive testing strategies for web applications and Android mobile apps using Insomnia REST Client for endpoint validation, ensuring 99.5% uptime and user satisfaction</li>
+                        <li><strong>Bug Lifecycle Management:</strong> Investigate, document, and report critical issues using structured methodologies, reducing resolution time by 40% through detailed reproduction steps and impact analysis</li>
+                        <li><strong>Release Management:</strong> Create and publish detailed release notes coordinating with Product Owners to ensure seamless deployments and stakeholder communication</li>
+                        <li><strong>Documentation & Knowledge Management:</strong> Maintain and update comprehensive knowledge base using Zoho Desk, including multilingual content creation in English and French</li>
+                        <li><strong>Cross-functional Collaboration:</strong> Serve as primary technical liaison between Development, Product, and Customer Success teams, bridging communication gaps</li>
+                        <li><strong>Multilingual Customer Support:</strong> Provide tier-2 technical support and training to end users in English and French, resolving complex issues and maintaining customer satisfaction</li>
+                        <li><strong>AI Integration Pioneer:</strong> Early adopter leveraging LLMs (ChatGPT, Claude) and Hugging Face ecosystem for test case generation, documentation improvement, and workflow optimization, increasing productivity by 200%. Completed Hugging Face AI Agents course to enhance ML workflow understanding.</li>
+                        <li><strong>Current Side Project:</strong> Developing context engineering application using Python and Git version control via Windsurf IDE, applying practical AI agent development skills to real-world problems</li>
+                        <li><strong>API Testing & Validation:</strong> Performed comprehensive REST API testing using Insomnia, validating HTTP status codes, JSON payloads, and endpoint functionality across web services</li>
                     </ul>
                 </div>
 
@@ -74,6 +311,10 @@
             <section class="education">
                 <h2>Education & Certifications</h2>
                 <div class="school">
+                    <h3>🤗 Hugging Face AI Agents Course - Hugging Face</h3>
+                    <p><em>2024 • Advanced AI Agent Development & Implementation</em></p>
+                </div>
+                <div class="school">
                     <h3>CCP Diploma - Credit Institute of Canada</h3>
                     <p><em>2009 - 2012 • Professional Credit Management Certification</em></p>
                 </div>
@@ -94,21 +335,25 @@
                         <h4>QA & Testing</h4>
                         <ul>
                             <li>Manual Testing</li>
+                            <li>API Testing (Insomnia, REST)</li>
                             <li>Web Application Testing</li>
                             <li>Mobile App Testing (Android)</li>
                             <li>Bug Analysis & Reporting</li>
                             <li>Test Case Design</li>
                             <li>Regression Testing</li>
                             <li>User Acceptance Testing</li>
-                            <li>API Testing</li>
+                            <li>HTTP/JSON Validation</li>
                         </ul>
                     </div>
                     <div class="skill-category">
                         <h4>AI & Automation</h4>
                         <ul>
                             <li>Large Language Models (LLMs)</li>
-                            <li>Prompt Engineering</li>
+                            <li>Hugging Face Ecosystem</li>
+                            <li>AI Agents & Workflows</li>
+                            <li>Python Programming</li>
                             <li>Context Engineering</li>
+                            <li>Prompt Engineering</li>
                             <li>AI-Assisted Testing</li>
                             <li>Automated Documentation</li>
                             <li>ChatGPT/Claude Integration</li>
@@ -117,13 +362,16 @@
                     <div class="skill-category">
                         <h4>Technical Tools</h4>
                         <ul>
+                            <li>Insomnia REST Client</li>
+                            <li>Python Programming</li>
                             <li>SQL Querying</li>
+                            <li>Git Version Control</li>
+                            <li>Windsurf IDE</li>
                             <li>Microsoft Navision/Dynamics</li>
                             <li>Zoho Desk</li>
                             <li>Cognos Business Intelligence</li>
                             <li>Excel/Google Sheets (Advanced)</li>
                             <li>Jira/Bug Tracking</li>
-                            <li>Git Version Control</li>
                         </ul>
                     </div>
                     <div class="skill-category">
@@ -154,10 +402,18 @@
                     <span class="keyword">Mobile Testing</span>
                     <span class="keyword">Android</span>
                     <span class="keyword">API Testing</span>
+                    <span class="keyword">Insomnia</span>
+                    <span class="keyword">REST API</span>
+                    <span class="keyword">HTTP Testing</span>
+                    <span class="keyword">JSON Validation</span>
                     <span class="keyword">SQL</span>
                     <span class="keyword">Jira</span>
                     <span class="keyword">Agile</span>
                     <span class="keyword">Scrum</span>
+                    <span class="keyword">Python</span>
+                    <span class="keyword">Git</span>
+                    <span class="keyword">Context Engineering</span>
+                    <span class="keyword">Windsurf</span>
                     <span class="keyword">CI/CD</span>
                     <span class="keyword">Git</span>
                     <span class="keyword">Documentation</span>
@@ -175,12 +431,28 @@
                     <span class="keyword">Troubleshooting</span>
                     <span class="keyword">Remote Work</span>
                     <span class="keyword">AI Integration</span>
+                    <span class="keyword">Hugging Face</span>
+                    <span class="keyword">AI Agents</span>
+                    <span class="keyword">Machine Learning</span>
+                    <span class="keyword">ML Workflows</span>
                     <span class="keyword">Large Language Models</span>
                     <span class="keyword">Automation</span>
                     <span class="keyword">Bilingual</span>
                 </div>
             </div>
         </main>
-    </div>
+
+        <footer>
+            <button id="download-pdf">Download as PDF</button>
+        </footer>
+
+    </div><!-- /.container -->
+
+    <script>
+        // This script makes the button trigger the browser's native print dialog, which is the most reliable way to get a high-quality PDF.
+        document.getElementById('download-pdf').addEventListener('click', function () {
+            window.print();
+        });
+    </script>
 </body>
 </html>
