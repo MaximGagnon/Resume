@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import MathematicalMosaic from '@/components/MathematicalMosaic';
-import '@/components/MathematicalMosaic.css';
+import MathematicalMosaic from '../../components/mosaic/MathematicalMosaic';
+import '../../components/mosaic/MathematicalMosaic.css';
 
 export default function ResumeNoSocialsPage() {
   const handleDownloadPdf = () => {

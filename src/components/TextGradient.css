@@ -1,15 +1,10 @@
-.gradient-text-container {
-  text-align: center;
-  padding: 2rem 1rem;
-}
-
 .gradient-text {
-  font-size: clamp(3rem, 10vw, 5rem);
-  font-weight: 800;
-  line-height: 1.1;
-  background: linear-gradient(90deg, #3b82f6, #0ea5e9, #06b6d4);
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
-  display: inline-block;
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0;
 }
