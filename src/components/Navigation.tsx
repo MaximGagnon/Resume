@@ -21,10 +21,10 @@ const Navigation = () => {
       {isOpen && (
         <ul className="nav-links">
           <li>
-            <Link href="/" onClick={toggleMenu}>Resume with Socials</Link>
+            <Link href="/" onClick={toggleMenu}>Home</Link>
           </li>
           <li>
-            <Link href="/resume-no-socials" onClick={toggleMenu}>Resume without Socials</Link>
+            <Link href="/resume" onClick={toggleMenu}>Resume</Link>
           </li>
           <li>
             <Link href="/mosaic" onClick={toggleMenu}>Mosaic</Link>

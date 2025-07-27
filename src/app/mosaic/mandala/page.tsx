@@ -7,7 +7,7 @@ import '../page.css';
 
 const MandalaPage = () => {
   const drawFunction = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
-    drawMandalaAndName(ctx, width, height, 'Mandala');
+    drawMandalaAndName(ctx, 300, 300, 'Maxim Gagnon');
   };
 
   return (
