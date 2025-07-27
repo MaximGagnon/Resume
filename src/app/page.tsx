@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import MathematicalMosaic from '@/components/MathematicalMosaic';
-import '@/components/MathematicalMosaic.css';
+import MathematicalMosaic from '../components/mosaic/MathematicalMosaic';
+import '../components/mosaic/MathematicalMosaic.css';
+import TextGradient from '../components/TextGradient';
 
 export default function HomePage() {
   const handleDownloadPdf = () => {
@@ -12,8 +13,9 @@ export default function HomePage() {
   return (
     <div className="container">
       <header className="mosaic-header"> 
-        <MathematicalMosaic name="Maxim Gagnon" />
+        <MathematicalMosaic />
         <div className="header-content">
+          <TextGradient text="Maxim Gagnon" />
           <h2>Senior QA Analyst & AI Integration Specialist</h2>
           <p className="contact-info">
             <a href="mailto:maxim.gagnon.mg@gmail.com">maxim.gagnon.mg@gmail.com</a> &nbsp;&nbsp; | &nbsp;&nbsp; 📱 +387 (0)61-319-058
