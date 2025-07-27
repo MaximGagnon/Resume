@@ -1,7 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/mosaic/fibonacci-spiral/page": "app/mosaic/fibonacci-spiral/page.js",
-  "/mosaic/trig-waves/page": "app/mosaic/trig-waves/page.js",
-  "/mosaic/background-spiral/page": "app/mosaic/background-spiral/page.js",
-  "/mosaic/background/page": "app/mosaic/background/page.js"
-}
