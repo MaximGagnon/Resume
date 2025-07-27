@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical Mosaic Generator - Named</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+            margin-bottom: 1.5rem;
+        }
+        canvas {
+            background-color: #020617;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            max-width: 100%;
+            height: auto;
+        }
+        button {
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            background-color: #3b82f6;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <h1>Mathematical Mosaic Generator</h1>
+    <canvas id="mosaicCanvas" width="1200" height="800"></canvas>
+    <button id="downloadBtn">Download as PNG</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('mosaicCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            const colors = ['#3b82f6', '#0ea5e9', '#06b6d4'];
+
+            function drawBackground() {
+                const gradient = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, Math.max(width, height) / 1.5);
+                gradient.addColorStop(0, '#0f172a');
+                gradient.addColorStop(1, '#020617');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, width, height);
+            }
+
+            function drawTessellation() {
+                const size = 40;
+                for (let y = 0; y < height + size; y += size) {
+                    for (let x = 0; x < width + size; x += size) {
+                        ctx.beginPath();
+                        const shape = Math.floor(Math.random() * 3);
+                        ctx.fillStyle = `hsla(${180 + Math.random() * 60}, 70%, 50%, 0.15)`;
+                        if (shape === 0) { // Hexagon
+                            for (let i = 0; i < 6; i++) {
+                                ctx.lineTo(x + size / 2 * Math.cos(i * 2 * Math.PI / 6), y + size / 2 * Math.sin(i * 2 * Math.PI / 6));
+                            }
+                        } else if (shape === 1) { // Triangle
+                            ctx.moveTo(x, y);
+                            ctx.lineTo(x + size, y);
+                            ctx.lineTo(x + size / 2, y + size);
+                        } else { // Square
+                             ctx.rect(x - size/2, y - size/2, size, size);
+                        }
+                        ctx.closePath();
+                        ctx.fill();
+                    }
+                }
+            }
+
+            function drawFibonacciSpiral() {
+                const scale = 5;
+                const angle = 137.5 * (Math.PI / 180);
+                for (let n = 0; n < 1000; n++) {
+                    const r = scale * Math.sqrt(n);
+                    const theta = n * angle;
+                    const x = width / 2 + r * Math.cos(theta);
+                    const y = height / 2 + r * Math.sin(theta);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 1 + n * 0.005, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${200 + n * 0.1}, 80%, 65%, 0.6)`;
+                    ctx.fill();
+                }
+            }
+
+            function drawTrigWaves() {
+                const functions = [
+                    { func: Math.sin, color: colors[0], amp: 50, freq: 0.02 },
+                    { func: Math.cos, color: colors[1], amp: 60, freq: 0.015 },
+                    { func: (x) => Math.sin(x * 0.01) + Math.cos(x*0.03), color: colors[2], amp: 70, freq: 1}
+                ];
+                functions.forEach(f => {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `${f.color}80`;
+                    ctx.lineWidth = 3;
+                    for (let x = 0; x < width; x++) {
+                        const y = height / 2 + f.func(x * f.freq) * f.amp;
+                        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                    }
+                    ctx.stroke();
+                });
+            }
+
+            function drawFractalTree(x, y, angle, depth, branchLength) {
+                if (depth === 0) return;
+                const endX = x + Math.cos(angle) * branchLength;
+                const endY = y + Math.sin(angle) * branchLength;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(endX, endY);
+                ctx.strokeStyle = `hsla(195, 80%, ${60 - depth * 3}%, ${0.2 + depth * 0.1})`;
+                ctx.lineWidth = depth * 0.8;
+                ctx.stroke();
+                drawFractalTree(endX, endY, angle - 0.5, depth - 1, branchLength * 0.8);
+                drawFractalTree(endX, endY, angle + 0.5, depth - 1, branchLength * 0.8);
+            }
+
+            function drawMandalaWithName() {
+                const symbols = ['∫', '∂', '∇', '∞', '≈', '≡', '⊕', '⊗', '∪', '∩', '∈', '⊂'];
+                ctx.save();
+                ctx.translate(width / 2, height / 2);
+                symbols.forEach((symbol, i) => {
+                    const angle = (i / symbols.length) * 2 * Math.PI;
+                    ctx.save();
+                    ctx.rotate(angle);
+                    ctx.font = '28px serif';
+                    ctx.fillStyle = 'hsla(210, 70%, 80%, 0.7)';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(symbol, 0, -250);
+                    ctx.restore();
+                });
+
+                // Draw the name in the center
+                ctx.font = 'bold 72px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowColor = 'rgba(59, 130, 246, 0.7)';
+                ctx.shadowBlur = 25;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('Maxim Gagnon', 0, 0);
+                ctx.restore();
+            }
+
+            // --- Main Drawing Function ---
+            function generateArt() {
+                ctx.clearRect(0, 0, width, height);
+                drawBackground();
+                drawTessellation();
+                drawFibonacciSpiral();
+                drawTrigWaves();
+                drawFractalTree(width / 4, height, -Math.PI / 2, 8, 50);
+                drawFractalTree(width * 0.75, height, -Math.PI / 2, 8, 50);
+                drawMandalaWithName();
+            }
+
+            // --- Event Listeners ---
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.addEventListener('click', () => {
+                const link = document.createElement('a');
+                link.download = 'mathematical-mosaic-maxim-gagnon.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+            });
+
+            // Generate the artwork
+            generateArt();
+        });
+    </script>
+</body>
+</html>

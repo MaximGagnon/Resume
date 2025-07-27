@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical Mosaic Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #020617 100%);
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .header p {
+            color: #93c5fd;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .download-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .canvas-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        #mosaicCanvas {
+            width: 100%;
+            height: auto;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
+
+        .info-card h3 {
+            color: #e2e8f0;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .info-card ul {
+            list-style: none;
+            color: #94a3b8;
+        }
+
+        .info-card li {
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .info-card li::before {
+            content: '•';
+            color: #3b82f6;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .mathematical-symbols {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .symbol {
+            position: absolute;
+            color: rgba(59, 130, 246, 0.1);
+            font-size: 24px;
+            font-family: serif;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .loading {
+            text-align: center;
+            color: #93c5fd;
+            font-size: 1.1rem;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mathematical-symbols">
+        <div class="symbol" style="top: 10%; left: 5%; animation-delay: 0s;">∫</div>
+        <div class="symbol" style="top: 20%; left: 85%; animation-delay: 1s;">∂</div>
+        <div class="symbol" style="top: 60%; left: 10%; animation-delay: 2s;">∇</div>
+        <div class="symbol" style="top: 80%; left: 90%; animation-delay: 3s;">∞</div>
+        <div class="symbol" style="top: 40%; left: 95%; animation-delay: 4s;">≈</div>
+        <div class="symbol" style="top: 70%; left: 3%; animation-delay: 5s;">⊕</div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Mathematical Mosaic Generator</h1>
+            <p>Professional resume artwork combining mathematics, fractals, and data visualization</p>
+            <button class="download-btn" onclick="downloadCanvas()">
+                Download High-Res PNG for Resume
+            </button>
+        </div>
+
+        <div class="canvas-container">
+            <div class="loading" id="loading">Generating mathematical mosaic...</div>
+            <canvas id="mosaicCanvas" width="1200" height="800" style="display: none;"></canvas>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Mathematical Elements</h3>
+                <ul>
+                    <li>Fibonacci spiral patterns</li>
+                    <li>Fractal tree structures</li>
+                    <li>Trigonometric functions</li>
+                    <li>Golden ratio proportions</li>
+                    <li>Parametric equations</li>
+                </ul>
+            </div>
+            <div class="info-card">
+                <h3>Visual Techniques</h3>
+                <ul>
+                    <li>Geometric tessellation</li>
+                    <li>Color theory gradients</li>
+                    <li>Network visualization</li>
+                    <li>Layered composition</li>
+                    <li>Mathematical mandala</li>
+                </ul>
+            </div>
+            <div class="info-card">
+                <h3>Print Specifications</h3>
+                <ul>
+                    <li>1200x800px resolution</li>
+                    <li>High contrast design</li>
+                    <li>Professional color palette</li>
+                    <li>Print-optimized quality</li>
+                    <li>Instant download ready</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mathematical mosaic generation
+        const canvas = document.getElementById('mosaicCanvas');
+        const ctx = canvas.getContext('2d');
+        const loading = document.getElementById('loading');
+
+        // Set canvas size
+        const width = 1200;
+        const height = 800;
+        canvas.width = width;
+        canvas.height = height;
+
+        // Mathematical functions
+        function generateFibonacciSpiral(turns, points) {
+            const spiral = [];
+            const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+            
+            for (let i = 0; i < points; i++) {
+                const theta = i * goldenAngle * turns;
+                const radius = Math.sqrt(i) * 8;
+                spiral.push({
+                    x: width / 2 + radius * Math.cos(theta),
+                    y: height / 2 + radius * Math.sin(theta),
+                    size: Math.sin(i * 0.1) * 3 + 5,
+                    hue: (i * 137.5) % 360
+                });
+            }
+            return spiral;
+        }
+
+        function generateTesselation() {
+            const tiles = [];
+            const tileSize = 35;
+            const hexHeight = tileSize * Math.sqrt(3);
+            
+            for (let row = 0; row < height / hexHeight + 2; row++) {
+                for (let col = 0; col < width / tileSize + 2; col++) {
+                    const x = col * tileSize * 0.75;
+                    const y = row * hexHeight + (col % 2) * hexHeight / 2;
+                    
+                    const noise = Math.sin(x * 0.01) * Math.cos(y * 0.01) * Math.sin((x + y) * 0.005);
+                    const colorIntensity = (noise + 1) / 2;
+                    
+                    tiles.push({
+                        x, y, size: tileSize,
+                        color: colorIntensity,
+                        pattern: Math.floor(Math.random() * 4)
+                    });
+                }
+            }
+            return tiles;
+        }
+
+        function drawFractalTree(x, y, angle, depth, length) {
+            if (depth === 0) return;
+            
+            const endX = x + Math.cos(angle) * length;
+            const endY = y + Math.sin(angle) * length;
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(endX, endY);
+            ctx.strokeStyle = `hsla(${120 + depth * 20}, 60%, ${40 + depth * 5}%, ${0.3 + depth * 0.1})`;
+            ctx.lineWidth = depth;
+            ctx.stroke();
+            
+            drawFractalTree(endX, endY, angle - Math.PI / 6, depth - 1, length * 0.7);
+            drawFractalTree(endX, endY, angle + Math.PI / 6, depth - 1, length * 0.7);
+        }
+
+        function drawMosaic() {
+            // Background gradient
+            const bgGradient = ctx.createRadialGradient(
+                width / 2, height / 2, 0,
+                width / 2, height / 2, Math.max(width, height) / 2
+            );
+            bgGradient.addColorStop(0, '#0f172a');
+            bgGradient.addColorStop(1, '#020617');
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Layer 1: Tessellation
+            const tiles = generateTesselation();
+            tiles.forEach(tile => {
+                ctx.save();
+                ctx.translate(tile.x, tile.y);
+                
+                ctx.beginPath();
+                switch (tile.pattern) {
+                    case 0: // Hexagon
+                        for (let i = 0; i < 6; i++) {
+                            const angle = (i * Math.PI) / 3;
+                            const x = Math.cos(angle) * tile.size * 0.3;
+                            const y = Math.sin(angle) * tile.size * 0.3;
+                            if (i === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        }
+                        ctx.closePath();
+                        break;
+                    case 1: // Triangle
+                        ctx.moveTo(0, -tile.size * 0.3);
+                        ctx.lineTo(-tile.size * 0.25, tile.size * 0.2);
+                        ctx.lineTo(tile.size * 0.25, tile.size * 0.2);
+                        ctx.closePath();
+                        break;
+                    case 2: // Diamond
+                        ctx.moveTo(0, -tile.size * 0.3);
+                        ctx.lineTo(tile.size * 0.2, 0);
+                        ctx.lineTo(0, tile.size * 0.3);
+                        ctx.lineTo(-tile.size * 0.2, 0);
+                        ctx.closePath();
+                        break;
+                    case 3: // Circle
+                        ctx.arc(0, 0, tile.size * 0.2, 0, Math.PI * 2);
+                        break;
+                }
+                
+                const hue = (tile.color * 240 + 200) % 360;
+                const saturation = 60 + tile.color * 40;
+                const lightness = 30 + tile.color * 30;
+                ctx.fillStyle = `hsla(${hue}, ${saturation}%, ${lightness}%, 0.7)`;
+                ctx.fill();
+                
+                ctx.strokeStyle = `hsla(${hue}, ${saturation + 20}%, ${lightness + 20}%, 0.9)`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                ctx.restore();
+            });
+
+            // Layer 2: Fibonacci Spiral
+            const spiralPoints = generateFibonacciSpiral(3, 200);
+            spiralPoints.forEach((point, index) => {
+                if (point.x < 0 || point.x > width || point.y < 0 || point.y > height) return;
+                
+                ctx.beginPath();
+                const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, point.size);
+                gradient.addColorStop(0, `hsla(${point.hue}, 80%, 60%, 0.8)`);
+                gradient.addColorStop(1, `hsla(${point.hue}, 80%, 30%, 0.2)`);
+                
+                ctx.fillStyle = gradient;
+                ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Connecting lines
+                if (index > 0 && index % 7 === 0) {
+                    const prevPoint = spiralPoints[index - 7];
+                    if (prevPoint) {
+                        ctx.beginPath();
+                        ctx.moveTo(point.x, point.y);
+                        ctx.lineTo(prevPoint.x, prevPoint.y);
+                        ctx.strokeStyle = `hsla(${point.hue}, 60%, 50%, 0.3)`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            // Layer 3: Mathematical Functions
+            const mathFunctions = [
+                (x) => Math.sin(x * 0.02) * 100 + height * 0.3,
+                (x) => Math.cos(x * 0.015) * 80 + height * 0.5,
+                (x) => Math.tan(x * 0.01) * 20 + height * 0.7,
+                (x) => Math.sin(x * 0.025) * Math.cos(x * 0.01) * 60 + height * 0.6
+            ];
+
+            mathFunctions.forEach((func, funcIndex) => {
+                ctx.beginPath();
+                const hue = funcIndex * 90;
+                ctx.strokeStyle = `hsla(${hue}, 70%, 50%, 0.6)`;
+                ctx.lineWidth = 2;
+                
+                for (let x = 0; x < width; x += 2) {
+                    const y = func(x);
+                    if (y >= 0 && y <= height) {
+                        if (x === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                }
+                ctx.stroke();
+                
+                // Function dots
+                for (let x = 0; x < width; x += 20) {
+                    const y = func(x);
+                    if (y >= 0 && y <= height) {
+                        ctx.beginPath();
+                        ctx.fillStyle = `hsla(${hue}, 80%, 60%, 0.8)`;
+                        ctx.arc(x, y, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            });
+
+            // Layer 4: Fractal Trees
+            const treePositions = [
+                { x: width * 0.15, y: height * 0.8 },
+                { x: width * 0.85, y: height * 0.2 },
+                { x: width * 0.7, y: height * 0.9 }
+            ];
+
+            treePositions.forEach(pos => {
+                drawFractalTree(pos.x, pos.y, -Math.PI / 2, 6, 40);
+            });
+
+            // Layer 5: Central Mathematical Mandala
+            ctx.save();
+            ctx.translate(width / 2, height / 2);
+            
+            for (let i = 0; i < 12; i++) {
+                ctx.save();
+                ctx.rotate((i * Math.PI * 2) / 12);
+                
+                ctx.font = '24px serif';
+                ctx.fillStyle = 'hsla(200, 70%, 60%, 0.7)';
+                ctx.textAlign = 'center';
+                const symbols = ['∫', '∂', '∇', '∞', '≈', '≡', '⊕', '⊗', '∪', '∩', '∈', '⊂'];
+                ctx.fillText(symbols[i], 0, -80);
+                
+                ctx.restore();
+            }
+            
+            // Central equation
+            ctx.font = 'bold 16px monospace';
+            ctx.fillStyle = 'hsla(240, 80%, 70%, 0.9)';
+            ctx.textAlign = 'center';
+            ctx.fillText('e^(iπ) + 1 = 0', 0, 0);
+            
+            ctx.restore();
+
+            // Layer 6: Network Visualization
+            const dataPoints = Array.from({ length: 50 }, (_, i) => ({
+                x: (i / 49) * width,
+                y: height * 0.1 + Math.random() * height * 0.8,
+                value: Math.random() * 100
+            }));
+
+            dataPoints.forEach((point, index) => {
+                dataPoints.slice(index + 1).forEach(otherPoint => {
+                    const distance = Math.sqrt((point.x - otherPoint.x) ** 2 + (point.y - otherPoint.y) ** 2);
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(point.x, point.y);
+                        ctx.lineTo(otherPoint.x, otherPoint.y);
+                        ctx.strokeStyle = `hsla(180, 50%, 50%, ${0.3 - distance / 500})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                });
+                
+                // Draw node
+                ctx.beginPath();
+                ctx.fillStyle = `hsla(${point.value * 3.6}, 70%, 60%, 0.8)`;
+                ctx.arc(point.x, point.y, 3 + point.value * 0.05, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function downloadCanvas() {
+            const link = document.createElement('a');
+            link.download = 'mathematical-mosaic-resume.png';
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+        }
+
+        // Generate the mosaic
+        setTimeout(() => {
+            drawMosaic();
+            loading.style.display = 'none';
+            canvas.style.display = 'block';
+        }, 500);
+    </script>
+</body>
+</html>
